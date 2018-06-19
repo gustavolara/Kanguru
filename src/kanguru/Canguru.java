@@ -6,7 +6,6 @@ public class Canguru extends Thread{
     public boolean chegou;
     private Corrida corrida;
     public int id;
-    //public boolean pula;
     
     public Canguru(String nome,Corrida corrida,int id){
         super(nome);

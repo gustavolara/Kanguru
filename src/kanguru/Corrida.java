@@ -7,7 +7,7 @@ public class Corrida {
     int aux;
     private int ordem;
 
-    public synchronized void chegada(int canguru){
+    public void chegada(int canguru){
         this.colocacao[aux] = canguru;
         aux++;
         if(aux==5){
@@ -34,16 +34,12 @@ public class Corrida {
             canguru.chegou = true;
             this.chegada(canguru.id);
         }
-        //canguru.pula = true;
-        //if(canguru.id==5)
-            notifyAll();
+        notifyAll();
     }
-    
-    
-    
-    
+  
     public synchronized void espera(Canguru canguru){
-        this.ordem = (this.ordem+1)%5;
+        ordem++;
+        ordem = ordem % 5;
         while((canguru.id-1) != this.ordem){
             try {
                 wait();
@@ -51,6 +47,5 @@ public class Corrida {
                 ex.printStackTrace();
             }
         }
-        //canguru.pula = false;
     }
 }
