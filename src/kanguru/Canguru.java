@@ -1,30 +1,24 @@
 package kanguru;
 
 public class Canguru extends Thread{
-    private int DistPercorrida;
+    public int id;
     private int DistMaxPercorrida;
     public boolean chegou;
     private Corrida corrida;
-    public int id;
-    
+        
     public Canguru(String nome,Corrida corrida,int id){
         super(nome);
         this.corrida = corrida;
         this.id = id;
     }
-    public int getDistPercorrida() {
-        return DistPercorrida;
-    }
-    public void setDistPercorrida(int DistPercorrida) {
-        this.DistPercorrida = DistPercorrida;
-    }
+    
     public int getDistMaxPercorrida() {
         return DistMaxPercorrida;
     }
     public void setDistMaxPercorrida(int DistMaxPercorrida) {
         this.DistMaxPercorrida = DistMaxPercorrida;
     }  
- 
+    // Se for a vez do canguru: Pula, se não for: Espera
     @Override
     public void run(){
         do{
