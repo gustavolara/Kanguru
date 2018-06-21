@@ -1,7 +1,7 @@
 package kanguru;
 
 public class Canguru extends Thread{
-    public int id;
+    private int id;
     private int DistMaxPercorrida;
     public boolean chegou;
     private Corrida corrida;
@@ -11,7 +11,10 @@ public class Canguru extends Thread{
         this.corrida = corrida;
         this.id = id;
     }
-    
+
+    public int getIdCanguru() {
+        return id;
+    }
     public int getDistMaxPercorrida() {
         return DistMaxPercorrida;
     }

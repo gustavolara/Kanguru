@@ -1,14 +1,15 @@
 package kanguru;
+import java.util.ArrayList;
 
 public class Corrida {
-    public Canguru colocacao[] = new Canguru[5];
+    public ArrayList<Canguru> ordemChegada = new ArrayList<Canguru>();
     public int tamCorrida = ((int)(Math.random()*20)+80);
     public int ordem;    
     public boolean acabou;
     int aux;
     //Recebe o Id da ordem de chegada dos Cangurus
     public void chegada(Canguru canguru){
-        this.colocacao[aux] = canguru;
+        this.ordemChegada.add(canguru);
         aux++;
         if(aux==5){
             acabou=true;
@@ -19,7 +20,7 @@ public class Corrida {
     public void podium(){
         System.out.println("Ordem de Chegada:");
         for(int i=0;i<5;i++)
-            System.out.println(this.colocacao[i].getName());
+            System.out.println(this.ordemChegada.get(i).getName());
     }
     
     public synchronized void Pula(Canguru canguru){
@@ -38,15 +39,15 @@ public class Corrida {
             do{
                 this.ordem++;
                 this.ordem = this.ordem % 5;
-            }while(this.verifaSeJaChegou());
+            }while(this.verificaSeJaChegou());
         }
         //Avisa que pulou
         notifyAll();
     }
     //Verifica se o Canguru da vez já terminou a corrida, caso tenha terminado passa a vez para o próximo
-    public boolean verifaSeJaChegou(){
-        for (Canguru colocacao1 : this.colocacao) {
-            if (colocacao1.id - 1 == this.ordem) {
+    public boolean verificaSeJaChegou(){
+        for(int i = 0;i < this.ordemChegada.size();i++){
+            if(this.ordemChegada.get(i).getIdCanguru()-1 == this.ordem){
                 return true;
             }
         }
@@ -54,7 +55,7 @@ public class Corrida {
     }
     //Mantém o canguru em espera enquanto não for a vez dele de Pular
     public synchronized void espera(Canguru canguru){
-        while((canguru.id-1) != this.ordem){
+        while((canguru.getIdCanguru()-1) != this.ordem){
             try {
                 wait();
             } catch (InterruptedException ex) {
