@@ -5,7 +5,7 @@ public class Corrida {
     public int tamCorrida = ((int)(Math.random()*20)+80);
     public boolean acabou=false;
     int aux;
-    private int ordem;
+    public int ordem;
 
     public void chegada(int canguru){
         this.colocacao[aux] = canguru;
@@ -34,12 +34,30 @@ public class Corrida {
             canguru.chegou = true;
             this.chegada(canguru.id);
         }
+        
+        if(!this.acabou){
+            do{
+                this.ordem++;
+                this.ordem = this.ordem % 5;
+            }while(this.verifaSeJaChegou());
+        }
+        
         notifyAll();
     }
   
+    public boolean verifaSeJaChegou()
+    {
+        for(int i = 0;i < this.colocacao.length;i++){
+            if(this.colocacao[i] - 1 == this.ordem){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     public synchronized void espera(Canguru canguru){
-        ordem++;
-        ordem = ordem % 5;
+        
         while((canguru.id-1) != this.ordem){
             try {
                 wait();

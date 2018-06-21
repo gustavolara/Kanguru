@@ -27,13 +27,17 @@ public class Canguru extends Thread{
  
     @Override
     public void run(){
-        while(!chegou){
-            corrida.Pula(this);
-            try {
-                corrida.espera(this);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        do{
+            if(corrida.ordem == this.id-1){
+                corrida.Pula(this);
             }
-        }
+            else{
+                try {
+                    corrida.espera(this);
+                }catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }while(!this.chegou);
     }
 }
