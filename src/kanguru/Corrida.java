@@ -1,13 +1,13 @@
 package kanguru;
 
 public class Corrida {
-    public int colocacao[] = new int[5];
+    public Canguru colocacao[] = new Canguru[5];
     public int tamCorrida = ((int)(Math.random()*20)+80);
-    public boolean acabou=false;
+    public int ordem;    
+    public boolean acabou;
     int aux;
-    public int ordem;
     //Recebe o Id da ordem de chegada dos Cangurus
-    public void chegada(int canguru){
+    public void chegada(Canguru canguru){
         this.colocacao[aux] = canguru;
         aux++;
         if(aux==5){
@@ -19,7 +19,7 @@ public class Corrida {
     public void podium(){
         System.out.println("Ordem de Chegada:");
         for(int i=0;i<5;i++)
-            System.out.println("Jack "+this.colocacao[i]);
+            System.out.println(this.colocacao[i].getName());
     }
     
     public synchronized void Pula(Canguru canguru){
@@ -31,7 +31,7 @@ public class Corrida {
         //Verifica se chegou; Se sim coloca no vetor da ordem e mata a thread
         if(canguru.getDistMaxPercorrida() >= this.tamCorrida){
             canguru.chegou = true;
-            this.chegada(canguru.id);
+            this.chegada(canguru);
         }
         //Passa a vez; Se o canguru da vez ja chegou passa a vez novamente
         if(!this.acabou){
@@ -45,8 +45,8 @@ public class Corrida {
     }
     //Verifica se o Canguru da vez já terminou a corrida, caso tenha terminado passa a vez para o próximo
     public boolean verifaSeJaChegou(){
-        for(int i = 0;i < this.colocacao.length;i++){
-            if(this.colocacao[i] - 1 == this.ordem){
+        for (Canguru colocacao1 : this.colocacao) {
+            if (colocacao1.id - 1 == this.ordem) {
                 return true;
             }
         }
